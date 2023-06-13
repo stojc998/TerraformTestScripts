@@ -5,7 +5,7 @@ terraform {
   required_providers {
     aws = {
           source = "hashicorp/aws"
-          version = "~> 5.2.0" //zahtevamo verzijo 3.0 ali vecje 3.x
+          version = "~> 5.2.0" //zahtevamo verzijo 5.2.0 ali vecje 5.2.0
     }//aws
 
     http = {

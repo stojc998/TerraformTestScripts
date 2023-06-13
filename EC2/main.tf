@@ -22,4 +22,13 @@ resource "aws_s3_bucket_ownership_controls" "my-web-app-test-acl" {
   }//rule
 }//"aws_s3_bucket_ownership_controls" "my-web-app-test-acl"
 
+resource "aws_instance" "web_server" {
+  ami = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+  subnet_id = module.network.vpc_id
+  tags = {
+    Name = "Web EC2 server"
+  }//tags
+}//resource "aws_instance" "web_server"
+
 
