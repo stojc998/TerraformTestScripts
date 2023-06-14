@@ -119,3 +119,35 @@ resource "aws_nat_gateway" "nat_gateway" {
     Name = "NAT GAteway"
   }//tags
 }//"aws_nat_gateway" "nat_gateway"
+
+#Create security groups. These are basic SV that can be used in lots of cases
+resource "aws_security_group" "ssh-aces" {
+  name = "allow-ssh-from-myip"
+  vpc_id = aws_vpc.vpc.id
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    from_port = 22
+    protocol = "tcp"
+    to_port = 22
+  }//ingress SSH
+
+}//resource "aws_security_group" "ssh-aces"
+
+resource "aws_security_group" "web-aces" {
+  name = "allow-web-from-myIP"
+  vpc_id = aws_vpc.vpc.id
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    from_port = 80
+    protocol = "tcp"
+    to_port = 80
+  }//ingress web 80
+
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    from_port = 443
+    protocol = "tcp"
+    to_port = 443
+  }//ingress web 443
+
+}//resource "aws_security_group" "ssh-aces"

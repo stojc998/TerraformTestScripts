@@ -2,6 +2,10 @@ module "network" {
   source = "../Network"
 }//module "Network"
 
+module "keys" {
+  source = "../SSH_TLS"
+}
+
 resource "random_id" "random" {
   byte_length = 15
 }
@@ -26,9 +30,23 @@ resource "aws_instance" "web_server" {
   ami = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id = module.network.vpc_id
+  security_groups = [module.network.sg-ssh, module.network.sg-web]
+  key_name = module.keys.ssh_key_name
+
+  connection {
+    user = "ubuntu"
+    private_key = module.keys.tls_key_name
+    host = self.public_ip
+  }//connection
+
   tags = {
     Name = "Web EC2 server"
   }//tags
+
+  lifecycle {
+    ignore_changes = [security_group]
+  }//lifecycle
+
 }//resource "aws_instance" "web_server"
 
 
