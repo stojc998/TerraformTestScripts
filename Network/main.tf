@@ -125,7 +125,8 @@ resource "aws_security_group" "ssh-aces" {
   name = "allow-ssh-from-myip"
   vpc_id = aws_vpc.vpc.id
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    #cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    cidr_blocks = [MY_PUBLIC_IP] #created an export for my public ip
     from_port = 22
     protocol = "tcp"
     to_port = 22
