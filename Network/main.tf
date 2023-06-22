@@ -126,7 +126,7 @@ resource "aws_security_group" "ssh-aces" {
   vpc_id = aws_vpc.vpc.id
   ingress {
     #cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
-    cidr_blocks = [MY_PUBLIC_IP] #created an export for my public ip
+    cidr_blocks = [var.my_public_ip] #we intput our public IP
     from_port = 22
     protocol = "tcp"
     to_port = 22
@@ -139,7 +139,7 @@ resource "aws_security_group" "web-aces" {
   vpc_id = aws_vpc.vpc.id
   ingress {
     #cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
-    cidr_blocks = [MY_PUBLIC_IP]
+    cidr_blocks = [var.my_public_ip]
     from_port = 80
     protocol = "tcp"
     to_port = 80

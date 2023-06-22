@@ -8,6 +8,14 @@ variable "vpc_name" {
   default = "demo_vpc"
 }//vpc_name
 
+variable "my_public_ip" {
+  validation {
+    condition = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.vpc_cidr))
+
+    error_message = "Please enter a valid IP address. In a valid range."
+  }//validation
+}//"my_public_ip"
+
 variable "vpc_cidr" {
   type = string
   default = "10.0.0.0/16"
