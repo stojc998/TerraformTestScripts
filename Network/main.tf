@@ -138,14 +138,15 @@ resource "aws_security_group" "web-aces" {
   name = "allow-web-from-myIP"
   vpc_id = aws_vpc.vpc.id
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    #cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    cidr_blocks = [MY_PUBLIC_IP]
     from_port = 80
     protocol = "tcp"
     to_port = 80
   }//ingress web 80
 
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]//I have put this just for the sake of it. In the configuration that I have run I put my actual public IP
+    cidr_blocks = [MY_PUBLIC_IP]
     from_port = 443
     protocol = "tcp"
     to_port = 443
