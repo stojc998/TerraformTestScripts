@@ -36,3 +36,8 @@ output "subnet2-test-pri" {
 output "subnet3-prod-pri" {
   value = aws_subnet.private_subnets[3].id
 }//output "subnet3-prod-pri"
+
+output "public_ip" {
+  value = data.vault_generic_secret.vault-secrets
+  sensitive = true
+}//"public_ip"

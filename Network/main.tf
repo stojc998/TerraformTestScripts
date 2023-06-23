@@ -20,10 +20,13 @@ resource "aws_vpc" "vpc" {
 
 #Deploy the private subnet
 resource "aws_subnet" "private_subnets" {
-  for_each = var.private_subnets
+  //for_each = var.private_subnets
+  for_each = var.subnet_types
   vpc_id = aws_vpc.vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, each.value)
-  availability_zone = tolist(data.aws_availability_zones.available.names)[each.value]
+  //cidr_block = cidrsubnet(var.vpc_cidr, 8, each.value)
+  cidr_block = each.value.ip_private
+  //availability_zone = tolist(data.aws_availability_zones.available.names)[each.value]
+  availability_zone = each.value.az_private
 
   tags = {
     Name = each.key
@@ -33,10 +36,13 @@ resource "aws_subnet" "private_subnets" {
 
 #Deploy the public subnet
 resource "aws_subnet" "public_subnets" {
-  for_each = var.public_subnets
+  //for_each = var.public_subnets
+  for_each = var.subnet_types
   vpc_id = aws_vpc.vpc.id
-  cidr_block = cidrsubnet(var.vpc_cidr, 8, each.value + 100)
-  availability_zone = tolist(data.aws_availability_zones.available.names)[each.value]
+  //cidr_block = cidrsubnet(var.vpc_cidr, 8, each.value + 100)
+  cidr_block = each.value.ip_public
+  //availability_zone = tolist(data.aws_availability_zones.available.names)[each.value]
+  availability_zone = each.value.az_public
   map_public_ip_on_launch = true
 
   tags = {
@@ -146,7 +152,7 @@ resource "aws_security_group" "web-aces" {
   }//ingress web 80
 
   ingress {
-    cidr_blocks = [MY_PUBLIC_IP]
+    cidr_blocks = [var.my_public_ip]
     from_port = 443
     protocol = "tcp"
     to_port = 443

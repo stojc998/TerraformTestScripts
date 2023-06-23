@@ -4,11 +4,11 @@ module "network" {
 
 module "keys" {
   source = "SSH_TLS"
-}
+}//keys
 
 resource "random_id" "random" {
   byte_length = 15
-}
+}//random
 
 resource "aws_s3_bucket" "my-web-app-test-s3"{
   #dejansko ime za bucket na AWS-u. na koncu dodamo nek ramdom string

@@ -9,9 +9,11 @@ variable "vpc_name" {
 }//vpc_name
 
 variable "my_public_ip" {
+  type = string
+  default = data.vault_generic_secret.vault-secrets
+  sensitive = true
   validation {
     condition = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.vpc_cidr))
-
     error_message = "Please enter a valid IP address. In a valid range."
   }//validation
 }//"my_public_ip"
@@ -22,7 +24,6 @@ variable "vpc_cidr" {
 
   validation {
     condition = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.vpc_cidr))
-
     error_message = "Please enter a valid IP address. In a valid range."
   }//validation
 }//vpc_cidr
@@ -42,6 +43,32 @@ variable "public_subnets" {
     "production_public_subnet" = 3
   }//default
 }//public_subnets
+
+variable "subnet_types" {
+  type = map(any)
+  default = {
+    dev = {
+      ip_private = "10.10.10.0/24"
+      az_private = "us-east-1a"
+      ip_public = "10.10.110.0/24"
+      az_public = "us-east-1a"
+    }//dev
+
+    test = {
+      ip_private = "10.10.20.0/24"
+      az_private = "us-east-1b"
+      ip_public = "10.10.120.0/24"
+      az_public = "us-east-1b"
+    }//test
+
+    prod = {
+      ip_private = "10.10.30.0/24"
+      az_private = "us-east-1c"
+      ip_public = "10.10.130.0/24"
+      az_public = "us-east-1c"
+    }//prod
+  }//default
+}//"subnet-types"
 
 
 
