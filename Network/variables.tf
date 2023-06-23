@@ -1,3 +1,7 @@
+module "vault" {
+  source = "../vault"
+}
+
 variable "aws_region" {
   type = string
   default = "us-east-1"
@@ -10,7 +14,8 @@ variable "vpc_name" {
 
 variable "my_public_ip" {
   type = string
-  default = data.vault_generic_secret.vault-secrets
+  #default = data.vault_generic_secret.vault-secrets.data["my_public_ip"] //pure chance that the variable name is the same as the key name in vault
+  default = module.vault.public_ip //pure chance that the variable name is the same as the key name in vault
   sensitive = true
   validation {
     condition = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.vpc_cidr))
