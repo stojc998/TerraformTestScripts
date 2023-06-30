@@ -8,7 +8,7 @@ resource "local_file" "private_key_pem" {
 }//resource "local_file" "private_key_pem"
 
 resource "aws_key_pair" "my_keypair" {
-  key_name = "MyTestSSH_Key-20230613.pem"
+  key_name = "MyTestSSH_Key-20230613"
   public_key = tls_private_key.generate_key.public_key_openssh
 
   lifecycle {
